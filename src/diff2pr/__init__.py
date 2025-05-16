@@ -11,9 +11,20 @@ def create_pull_from_diff(
     """
     Create a pull request from a diff.
     """
-    result = []
+    result = {
+        'added_files': [],
+        'removed_files': [],
+        'modified_files': [],
+    }
     patch_set = PatchSet.from_string(diff)
     for patch in patch_set:
-        result.append(patch.path)
+        if patch.is_added_file:
+            result['added_files'].append(patch.path)
+        elif patch.is_removed_file:
+            result['removed_files'].append(patch.path)
+        elif patch.is_modified_file:
+            result['modified_files'].append(patch.path)
+        else:
+            raise ValueError(f"Broken invariant: files should be added, removed or modified, but got {patch}")
     return result
     

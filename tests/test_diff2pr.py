@@ -15,4 +15,8 @@ def test_diff2pr():
         diff=diff,
         title="Test Pull Request",
         body="This is a test pull request."
-    ) == ['README.md', 'src/diff2pr/__init__.py']
+    ) == {
+        'added_files': ['README.md', 'src/diff2pr/__init__.py'],
+        'removed_files': [],
+        'modified_files': [],
+    }
